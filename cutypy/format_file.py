@@ -1,7 +1,5 @@
 from pathlib import Path
 
-from cutypy.discover import ROOT
-
 from cutypy.rules.format.blank_lines import format_text as blank_lines
 from cutypy.rules.format.double_blanks import format_text as double_blanks
 from cutypy.rules.format.eof_newline import format_text as eof_newline

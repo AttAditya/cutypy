@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from formatter.discover import ROOT
+from cutypy.discover import ROOT
 
-from formatter.rules.lint.line_length import check as check_line_length
+from cutypy.rules.lint.line_length import check as check_line_length
 
 def lint_file(path: Path):
   text = path.read_text()

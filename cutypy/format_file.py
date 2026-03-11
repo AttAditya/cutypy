@@ -1,27 +1,27 @@
 from pathlib import Path
 
-from formatter.discover import ROOT
+from cutypy.discover import ROOT
 
-from formatter.rules.format.blank_lines import format_text as blank_lines
-from formatter.rules.format.double_blanks import format_text as double_blanks
-from formatter.rules.format.eof_newline import format_text as eof_newline
-from formatter.rules.format.import_sort import format_text as import_sort
-from formatter.rules.format.indentation import format_text as indentation
-from formatter.rules.format.line_endings import format_text as line_endings
+from cutypy.rules.format.blank_lines import format_text as blank_lines
+from cutypy.rules.format.double_blanks import format_text as double_blanks
+from cutypy.rules.format.eof_newline import format_text as eof_newline
+from cutypy.rules.format.import_sort import format_text as import_sort
+from cutypy.rules.format.indentation import format_text as indentation
+from cutypy.rules.format.line_endings import format_text as line_endings
 
-from formatter.rules.format.declaration_spacing import (
+from cutypy.rules.format.declaration_spacing import (
   format_text as declaration_spacing,
 )
 
-from formatter.rules.format.leading_blank_lines import (
+from cutypy.rules.format.leading_blank_lines import (
   format_text as leading_blank_lines,
 )
 
-from formatter.rules.format.trailing_commas import (
+from cutypy.rules.format.trailing_commas import (
   format_text as trailing_commas,
 )
 
-from formatter.rules.format.trailing_spaces import (
+from cutypy.rules.format.trailing_spaces import (
   format_text as trailing_spaces,
 )
 

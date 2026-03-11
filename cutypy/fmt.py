@@ -1,7 +1,7 @@
 import sys
 
-from formatter.discover import discover
-from formatter.format_file import format_file
+from cutypy.discover import discover
+from cutypy.format_file import format_file
 
 def main():
   args: list[str] = sys.argv[1:]

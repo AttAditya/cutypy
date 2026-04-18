@@ -8,9 +8,7 @@ from cutypy.format_file import format_file
 def get_version():
   try:
     return version("cutypy")
-
   except PackageNotFoundError:
-
     return "0.0.0"
 
 def main():
@@ -28,7 +26,6 @@ def main():
 
       if len(args) > 1:
         target = args[1]
-
     else:
       target = args[0]
 

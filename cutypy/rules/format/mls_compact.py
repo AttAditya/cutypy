@@ -21,7 +21,6 @@ def compact(text: str):
           cmp_temp = c * 3
           i += 3
           continue
-
         else:
           quote = c
           triple = False
@@ -29,12 +28,10 @@ def compact(text: str):
           cmp_temp = c
           i += 1
           continue
-
       else:
         cmp_text += c
         i += 1
         continue
-
     else:
       cmp_temp += c
 
@@ -49,13 +46,10 @@ def compact(text: str):
           is_compacting = False
           cmp_temp = ""
           continue
-
         else:
           i += 1
           continue
-
       else:
-
         if c == '\\' and i + 1 < n:
           cmp_temp += text[i+1]
           i += 2

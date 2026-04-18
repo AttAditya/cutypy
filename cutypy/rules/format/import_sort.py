@@ -62,7 +62,6 @@ def bucket_import_blocks(blocks: list[str]) -> dict[str, list[str]]:
     if stripped.startswith("import "):
       if " as " in stripped:
         buckets["import_alias"].append(block)
-
       else:
         buckets["import_plain"].append(block)
 
@@ -71,10 +70,8 @@ def bucket_import_blocks(blocks: list[str]) -> dict[str, list[str]]:
     if stripped.startswith("from "):
       if "(" in stripped and ")" in stripped:
         buckets["from_parenthesized"].append(block + "\n")
-
       elif " as " in stripped:
         buckets["from_alias"].append(block)
-
       else:
         buckets["from_plain"].append(block)
 

@@ -4,7 +4,6 @@ def count_leading_spaces(line: str) -> int:
   for char in line:
     if char == " ":
       count += 1
-
     else:
       break
 
@@ -16,6 +15,14 @@ def check_is_keyword(line: str):
     "def ", "class ", "@", "if ", "raise ",
     "try:", "for ", "while ", "with ", "async ",
     "return ", "continue ", "break ", "yield ",
+  ]
+
+  return any(stripped.startswith(keyword) for keyword in keywords)
+
+def check_ignoring_keyword(line: str):
+  stripped = line.strip()
+  keywords = [
+    "elif ", "else:", "except ", "finally:",
   ]
 
   return any(stripped.startswith(keyword) for keyword in keywords)
@@ -41,10 +48,12 @@ def format_text(
     is_closing = check_is_closing(line)
     is_blank = line.strip() == ""
     curr_indent = count_leading_spaces(line)
+    is_ignoring_keyword = check_ignoring_keyword(line)
     prev_indent = 0
     next_indent = 0
     is_prev_keyword = False
     is_indent_down = False
+    is_indent_up = False
     is_next_closing = False
     is_next_indent_up = False
 
@@ -52,6 +61,7 @@ def format_text(
       prev_indent = count_leading_spaces(lines[i - 1])
       is_prev_keyword = check_is_keyword(lines[i - 1])
       is_indent_down = prev_indent > curr_indent
+      is_indent_up = prev_indent < curr_indent
 
     if has_next_line:
       next_indent = count_leading_spaces(lines[i + 1])
@@ -72,6 +82,9 @@ def format_text(
 
     if is_next_indent_up:
       post_space_required &= False
+
+    if is_indent_up or is_ignoring_keyword:
+      pre_space_required &= False
 
     if pre_space_required:
       out.append("")

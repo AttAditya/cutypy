@@ -1,7 +1,17 @@
 import sys
 
+from importlib.metadata import version, PackageNotFoundError
+
 from cutypy.discover import discover
 from cutypy.format_file import format_file
+
+def get_version():
+  try:
+    return version("cutypy")
+
+  except PackageNotFoundError:
+
+    return "0.0.0"
 
 def main():
   args: list[str] = sys.argv[1:]
@@ -9,6 +19,10 @@ def main():
   target = "."
 
   if args:
+    if args[0] in ("--version", "-v"):
+      print(get_version())
+      return
+
     if args[0] == "--check":
       check_mode = True
 

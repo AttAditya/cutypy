@@ -28,7 +28,9 @@ def check_is_closing(line: str):
 
   return any(stripped.startswith(closing) for closing in closings)
 
-def format_text(text: str) -> str:
+def format_text(
+  text: str
+) -> str:
   lines = text.split("\n")
   out = []
 
@@ -40,9 +42,11 @@ def format_text(text: str) -> str:
     is_blank = line.strip() == ""
     curr_indent = count_leading_spaces(line)
     prev_indent = 0
+    next_indent = 0
     is_prev_keyword = False
     is_indent_down = False
     is_next_closing = False
+    is_next_indent_up = False
 
     if has_prev_line:
       prev_indent = count_leading_spaces(lines[i - 1])
@@ -50,7 +54,9 @@ def format_text(text: str) -> str:
       is_indent_down = prev_indent > curr_indent
 
     if has_next_line:
+      next_indent = count_leading_spaces(lines[i + 1])
       is_next_closing = check_is_closing(lines[i + 1])
+      is_next_indent_up = next_indent > curr_indent
 
     pre_space_required = False
     post_space_required = False
@@ -64,10 +70,13 @@ def format_text(text: str) -> str:
     if is_closing and not is_next_closing:
       post_space_required |= True
 
+    if is_next_indent_up:
+      post_space_required &= False
+
     if pre_space_required:
       out.append("")
 
-    out.append (line)
+    out.append(line)
 
     if post_space_required:
       out.append("")

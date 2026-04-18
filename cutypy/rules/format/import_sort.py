@@ -183,7 +183,6 @@ def split_top_import_section(lines: list[str]) -> tuple[list[str], list[str]]:
     if collecting and (
       stripped.startswith("import ") or stripped.startswith("from ")
     ):
-
       block = [line]
       balance = line.count("(") - line.count(")")
       i += 1
@@ -220,7 +219,6 @@ def format_text(text: str) -> str:
     "from_alias",
     "from_parenthesized",
   ]:
-
     sorted_group = sort_group(buckets[group_name])
 
     if not sorted_group:

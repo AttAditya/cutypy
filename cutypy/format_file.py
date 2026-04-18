@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from cutypy.rules.format.mls_compact import compact, expand
+
 from cutypy.rules.format.blank_lines import format_text as blank_lines
 from cutypy.rules.format.double_blanks import format_text as double_blanks
 from cutypy.rules.format.eof_newline import format_text as eof_newline
@@ -24,6 +26,7 @@ from cutypy.rules.format.trailing_spaces import (
 )
 
 def format_text(text: str) -> str:
+  text, compactions = compact(text)
   text = blank_lines(text)
   text = line_endings(text)
   text = trailing_spaces(text)
@@ -34,6 +37,7 @@ def format_text(text: str) -> str:
   text = trailing_commas(text)
   text = double_blanks(text)
   text = eof_newline(text)
+  text = expand(text, compactions)
 
   return text
 

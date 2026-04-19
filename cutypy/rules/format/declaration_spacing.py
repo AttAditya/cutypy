@@ -27,6 +27,14 @@ def check_ignoring_keyword(line: str):
 
   return any(stripped.startswith(keyword) for keyword in keywords)
 
+def check_indent_token(line: str):
+  stripped = line.strip()
+  indent_tokens = [
+    ":", ",",
+  ]
+
+  return any(stripped.endswith(token) for token in indent_tokens)
+
 def check_is_closing(line: str):
   stripped = line.strip()
   closings = [
@@ -49,6 +57,7 @@ def format_text(
     is_blank = line.strip() == ""
     curr_indent = count_leading_spaces(line)
     is_ignoring_keyword = check_ignoring_keyword(line)
+    has_indent_token = check_indent_token(line)
     prev_indent = 0
     next_indent = 0
     is_prev_keyword = False
@@ -80,7 +89,7 @@ def format_text(
     if is_closing and not is_next_closing:
       post_space_required |= True
 
-    if is_next_indent_up:
+    if is_next_indent_up or has_indent_token:
       post_space_required &= False
 
     if is_indent_up or is_ignoring_keyword:

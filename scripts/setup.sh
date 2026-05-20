@@ -1,16 +1,16 @@
-#!/bin/bash
+echo "Starting setup..."
 
-python3.14 -m venv .venv
+if [ -z "$(which python3.12)" ]; then
+  echo "Python3.12 is not installed."
+  echo "Please install Python3.12 and try again."
+  exit 1
+fi
+
+echo "Setting up virtual environment..."
+python3.12 -m venv .venv
 source .venv/bin/activate
-
-pip install --upgrade pip
+echo "Installing dependencies..."
 pip install -r requirements.txt
 
-cat << 'EOF' > .git/hooks/pre-commit
-#!/bin/bash
-scripts/pre-commit.sh
-EOF
+echo "Set up complete!"
 
-chmod +x gsrc.sh
-chmod +x scripts/*.sh
-chmod +x .git/hooks/pre-commit

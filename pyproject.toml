@@ -4,13 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cutypy"
-version = "0.1.6"
+version = "0.2.0"
 description = "A lightweight rule-based Python code formatter"
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.14"
+requires-python = ">=3.12"
 authors = [
   { name = "AttAditya" }
+]
+dependencies = [
+  "langex"
 ]
 
 keywords = ["python", "formatter", "code-formatter", "lint", "formatting"]

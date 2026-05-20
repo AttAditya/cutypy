@@ -34,6 +34,17 @@ def _check_ignoring_keyword_line(line: str | None) -> bool:
 
   return any(stripped.startswith(keyword) for keyword in keywords)
 
+def _check_marker_line(line: str | None) -> bool:
+  if line is None:
+    return False
+
+  stripped = line.strip()
+  markers = [
+    "::~cmpx::",
+  ]
+
+  return any(stripped.startswith(marker) for marker in markers)
+
 def _check_closing_line(line: str | None) -> bool:
   if line is None:
     return False
@@ -73,12 +84,13 @@ def _should_add_post_blank(line: str, post: str | None) -> bool:
   is_curr_closing = _check_closing_line(line)
   is_next_closing = _check_closing_line(post)
   is_next_indent_up = _get_indent(post) > _get_indent(line)
+  is_next_marker = _check_marker_line(post)
   has_indent_token = _check_indent_token_line(line)
 
   if is_next_closing or is_next_indent_up or has_indent_token:
     return False
 
-  return is_curr_closing
+  return is_curr_closing and not is_next_marker
 
 @autosig
 def add_keyword_blanks(content: Content) -> Content:

@@ -17,9 +17,6 @@ def get_cli_args(_: None) -> Args:
   recv = [*argv[1:]]
   mode = MODES.SOLVE
 
-  if not recv:
-    args.solve_paths.append(".")
-
   for arg in recv:
     if arg in ["-c", "--check"]:
       mode = MODES.CHECK
@@ -29,10 +26,20 @@ def get_cli_args(_: None) -> Args:
       mode = MODES.SOLVE
       continue
 
+    if arg in ["-v", "--version"]:
+      args.version_check = True
+      break
+
     if mode == MODES.CHECK:
       args.check_paths.append(arg)
     else:
       args.solve_paths.append(arg)
+  else:
+    if mode == MODES.CHECK and not args.check_paths:
+      args.check_paths.append(".")
+
+    if mode == MODES.SOLVE and not args.solve_paths:
+      args.solve_paths.append(".")
 
   return args
 

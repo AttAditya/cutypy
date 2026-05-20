@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cutypy"
-version = "0.2.0"
+version = "0.2.1"
 description = "A lightweight rule-based Python code formatter"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -33,7 +33,7 @@ Repository = "https://github.com/AttAditya/cutypy"
 Issues = "https://github.com/AttAditya/cutypy/issues"
 
 [project.scripts]
-cutypy = "cutypy.fmt:main"
+cutypy = "cutypy.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

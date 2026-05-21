@@ -2,6 +2,13 @@ from cutypy.models.content import Content
 
 from langex.core.functions import autosig
 
+from langex.core.classes import (
+  abstract,
+  extends,
+  interface,
+  implements,
+)
+
 def _get_indent(line: str | None) -> int:
   if line is None:
     return 0
@@ -17,7 +24,6 @@ def _check_keyword_line(line: str | None) -> bool:
     "def ", "class ", "@", "if ", "raise ",
     "try:", "for ", "while ", "with ", "async ",
     "return ", "continue ", "break ", "yield ",
-    "::~cmpx::",
   ]
 
   return any(stripped.startswith(keyword) for keyword in keywords)
@@ -29,7 +35,6 @@ def _check_ignoring_keyword_line(line: str | None) -> bool:
   stripped = line.strip()
   keywords = [
     "elif ", "else:", "except ", "finally:",
-    "::~cmpx::",
   ]
 
   return any(stripped.startswith(keyword) for keyword in keywords)
@@ -38,12 +43,7 @@ def _check_marker_line(line: str | None) -> bool:
   if line is None:
     return False
 
-  stripped = line.strip()
-  markers = [
-    "::~cmpx::",
-  ]
-
-  return any(stripped.startswith(marker) for marker in markers)
+  return line.startswith("::~cmpx::")
 
 def _check_closing_line(line: str | None) -> bool:
   if line is None:
@@ -71,6 +71,7 @@ def _should_add_prev_blank(line: str, prev: str | None) -> bool:
   is_indent_down = _get_indent(line) < _get_indent(prev)
   is_indent_up = _get_indent(line) > _get_indent(prev)
   is_closing = _check_closing_line(line)
+  is_prev_marker = _check_marker_line(prev)
 
   if is_closing or is_indent_up or is_ignoring_keyword:
     return False
@@ -78,7 +79,10 @@ def _should_add_prev_blank(line: str, prev: str | None) -> bool:
   if is_indent_down:
     return True
 
-  return is_curr_keyword and not is_prev_keyword
+  if is_prev_keyword or is_prev_marker:
+    return False
+
+  return is_curr_keyword
 
 def _should_add_post_blank(line: str, post: str | None) -> bool:
   is_curr_closing = _check_closing_line(line)
